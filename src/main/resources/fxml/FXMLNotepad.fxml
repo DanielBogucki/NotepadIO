@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bfpkg.controllers.FXMLNotepadController">
+<BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" fx:id="borderPane" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bfpkg.controllers.FXMLNotepadController">
     <top>
         <VBox>
             <children>
@@ -23,6 +23,7 @@
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#open" text="Otwórz" />
                                 <MenuItem mnemonicParsing="false" onAction="#save" text="Zapisz" />
+                                <MenuItem mnemonicParsing="false" onAction="#saveToFile" text="Zapisz do Pliku" />
                                 <MenuItem mnemonicParsing="false" onAction="#close" text="Zamknij" />
                             </items>
                         </Menu>
