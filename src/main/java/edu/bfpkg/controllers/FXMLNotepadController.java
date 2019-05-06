@@ -3,11 +3,18 @@ package edu.bfpkg.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.Scanner;
@@ -38,6 +45,11 @@ public class FXMLNotepadController {
     private File file;
 
     @FXML
+    void initialize(){
+
+    }
+
+    @FXML
     void close(ActionEvent event) {
         Platform.exit();
     }
@@ -47,9 +59,18 @@ public class FXMLNotepadController {
 
     }
 
-    @FXML
-    void font(ActionEvent event) {
+    void setStyle(double fontSize){
+        textArea.setStyle("-fx-font-size:" + fontSize +";");
+    }
 
+    @FXML
+    void font(ActionEvent event) throws IOException {
+        Parent dialogPane = FXMLLoader.load(getClass().getResource("/fxml/FormatPopUp.fxml"));
+        Stage dialog;
+        Scene scene = new Scene(dialogPane);
+        dialog = new Stage();
+        dialog.setScene(scene);
+        dialog.showAndWait();
     }
 
     @FXML
