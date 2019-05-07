@@ -5,9 +5,7 @@
  */
 package edu.bfpkg;
 
-import edu.bfpkg.controllers.FormatPopUpController;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
