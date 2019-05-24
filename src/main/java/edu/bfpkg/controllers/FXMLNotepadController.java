@@ -1,18 +1,19 @@
 package edu.bfpkg.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
+import javafx.scene.text.Font;import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class FXMLNotepadController {
@@ -41,10 +42,30 @@ public class FXMLNotepadController {
     @FXML
     private TextArea textArea;
 
-    Stage stage;
+Stage stage;
+  @FXML
+    private TextField txtFontSize;    private File file;
 
-    private File file;
 
+    @FXML
+    private ComboBox<String> cbxFonts;
+
+    private ObservableList<String> observableListFonts;
+
+    @FXML
+    void initialize() {
+        observableListFonts = FXCollections.observableArrayList(Font.getFamilies());
+        cbxFonts.setItems(observableListFonts);
+
+        String defaultFont = Font.getDefault().getFamily();
+        int defaultFontIndex = observableListFonts.indexOf(defaultFont);
+        cbxFonts.getSelectionModel().select(defaultFontIndex);
+
+        textArea.setFont(new Font(Font.getDefault().getFamily(), Double.parseDouble(txtFontSize.getText())));
+
+        cbxFonts.valueProperty().addListener((ov, oldFont, newFont) -> textArea.setFont(Font.font(newFont, Double.parseDouble(txtFontSize.getText()))));
+        txtFontSize.textProperty().addListener((observable, oldValue, newValue) -> textArea.setFont(Font.font(cbxFonts.getSelectionModel().getSelectedItem(), Double.parseDouble(newValue))));
+    }
 
     @FXML
     void close(ActionEvent event) {
@@ -53,11 +74,6 @@ public class FXMLNotepadController {
 
     @FXML
     void find(ActionEvent event) {
-
-    }
-
-    @FXML
-    void font(ActionEvent event) {
 
     }
 
