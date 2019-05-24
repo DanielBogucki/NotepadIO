@@ -85,7 +85,7 @@ public class FXMLNotepadController {
 
     @FXML
     void redo(ActionEvent event) {
-
+        textArea.redo();
     }
 
     @FXML
@@ -116,7 +116,7 @@ public class FXMLNotepadController {
 
     @FXML
     void undo(ActionEvent event) {
-
+        textArea.undo();
     }
 
     private void setStage() {
