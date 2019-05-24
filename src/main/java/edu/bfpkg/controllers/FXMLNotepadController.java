@@ -6,8 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Font;
+import javafx.scene.text.Font;import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +17,9 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class FXMLNotepadController {
+
+    @FXML
+    private BorderPane borderPane;
 
     @FXML
     private MenuItem btnFind;
@@ -38,10 +42,10 @@ public class FXMLNotepadController {
     @FXML
     private TextArea textArea;
 
-    @FXML
-    private TextField txtFontSize;
+Stage stage;
+  @FXML
+    private TextField txtFontSize;    private File file;
 
-    private File file;
 
     @FXML
     private ComboBox<String> cbxFonts;
@@ -80,44 +84,59 @@ public class FXMLNotepadController {
 
     @FXML
     void open(ActionEvent event) {
+        if (stage == null) setStage();
         FileChooser fileChooser = new FileChooser();
-
         //Set extension filter for text files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("pliki TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Show save file dialog
-        file = fileChooser.showOpenDialog(null);
+        file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
             textArea.setText(readFile());
+            stage.setTitle("Zaawansowany notatnik" + " (" + file.getName() + ")");
         }
     }
 
     @FXML
     void redo(ActionEvent event) {
-
+        textArea.redo();
     }
 
     @FXML
     void save(ActionEvent event) {
+        if (stage == null) setStage();
+        if (file == null) {
+            saveToFile(event);
+        } else {
+            saveTextToFile(textArea.getText());
+            stage.setTitle("Zaawansowany notatnik" + " (" + file.getName() + ")");
+        }
+
+    }
+
+    @FXML
+    void saveToFile(ActionEvent event) {
+        if (stage == null) setStage();
         FileChooser fileChooser = new FileChooser();
-
-        //Set extension filter for text files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("pliki TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-
-        //Show save file dialog
-        file = fileChooser.showSaveDialog(null);
+        file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
             saveTextToFile(textArea.getText());
+            stage.setTitle("Zaawansowany notatnik" + " (" + file.getName() + ")");
         }
     }
 
     @FXML
     void undo(ActionEvent event) {
+        textArea.undo();
+    }
 
+    private void setStage() {
+        stage = (Stage) borderPane.getScene().getWindow();
     }
 
     private void saveTextToFile(String text) {
@@ -129,13 +148,13 @@ public class FXMLNotepadController {
 
             Alert confirm = new Alert(Alert.AlertType.INFORMATION);
             confirm.setTitle("Saving OK");
-            confirm.setHeaderText("File " + file.getName() + " properly saved");
+            confirm.setHeaderText("Plik " + file.getName() + " poprawnie zapisany");
             confirm.show();
 
         } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Saving error");
-            alert.setHeaderText("There was an error during saving to file");
+            alert.setHeaderText("Błąd podczas zapisu do pliku");
             alert.setContentText(file.getAbsolutePath());
             alert.show();
         }
@@ -151,7 +170,7 @@ public class FXMLNotepadController {
         } catch (FileNotFoundException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Reading error");
-            alert.setHeaderText("There was an error during reading from file");
+            alert.setHeaderText("Błąd odczytu pliku");
             alert.setContentText(file.getAbsolutePath());
             alert.show();
         }
