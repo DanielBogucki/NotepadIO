@@ -6,7 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Font;import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -42,10 +43,11 @@ public class FXMLNotepadController {
     @FXML
     private TextArea textArea;
 
-Stage stage;
-  @FXML
-    private TextField txtFontSize;    private File file;
+    Stage stage;
+    @FXML
+    private TextField txtFontSize;
 
+    private File file;
 
     @FXML
     private ComboBox<String> cbxFonts;
